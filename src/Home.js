@@ -30,7 +30,6 @@ let createSearchUrl = (zip, radius, category) => {
     }
     return urlString;
   };
-
 class InputForm extends Component {
   constructor(props) {
     super(props)
@@ -42,6 +41,7 @@ class InputForm extends Component {
     }
 
     this.updateInputChange = this.updateInputChange.bind(this);
+
   }
 
   updateInputChange(input, event) {
@@ -54,6 +54,7 @@ class InputForm extends Component {
   }
 
   render() {
+
     let searchUrl = createSearchUrl(this.state.zip, this.state.radius, this.state.category);
 
     return (
@@ -99,6 +100,7 @@ class InputForm extends Component {
         Search
           </Link>
       </form >
+
     );
   }
 }
@@ -110,6 +112,7 @@ class Home extends Component {
         <h1 className="title">Social Butterfly</h1>
         <h3 className="tagline">Discover Local Events</h3>
         <InputForm id="searchParams" />
+
       </div>
     );
   }
