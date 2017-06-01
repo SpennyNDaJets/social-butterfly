@@ -5,6 +5,7 @@ import {
     Link } from 'react-router-dom';
 import Home from './Home';
 import Results from './Results';
+import Nav from './Nav';
 import './App.css';
 //import logo from './logo.svg';
 
@@ -15,11 +16,10 @@ class App extends Component {
       <div className="App">
         <Router>
           <div>
-            <Link to="/">Home</Link>
-            <Link to="/results">Results</Link>
+            <Nav/>
             <Route exact path='/' component={Home}/>
-            <Route path='/results' component={Results}/>
-        </div>
+            <Route path='/results/:zip/:radius/:category' component={Results}/>
+          </div>
         </Router>
       </div>
     );

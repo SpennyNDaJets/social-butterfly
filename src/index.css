@@ -2,12 +2,82 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  background-image: url("https://previews.123rf.com/images/zven0/zven01305/zven0130500039/19724826-world-map-on-the-wings-of-butterflies-freedom-concept-Stock-Photo.jpg");
+}
+
+a {
+  text-decoration: none;
+  color: #ff8800;
+}
+
+ul {
+  padding: 0;
+}
+
+li {
+  list-style-type: none;
 }
 
 .title {
   font-size: 50px;
+  font-weight: bold;
+  color: #00ccff;
 }
 
 .tagline {
   font-size: 32px;
+  color: #ff8800;
+}
+
+.inputForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputField {
+  margin: 10px;
+}
+
+.inputLabel {
+  color: #ff8800;
+}
+
+.nav {
+  display: flex;
+}
+
+.nav li {
+  margin-right: 15px;
+}
+
+.active {
+  font-weight: bold;
+}
+
+.searchForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  color: #e6e6e6;
+  background: #00ccff;
+  border: none;
+  font-size: 16px;
+  border-radius: 3px;
+  width: 200px;
+  text-align: center;
+  display: block;
+  padding: 7px 0;
+  margin: 20px auto;
+}
+
+.button:hover:enabled {
+  background: linear-gradient(#1a1a1a,#0a0a0a);
+  color: #fff;
+  text-decoration: none;
+}
+
+.button:active {
+  transform: translateY(1px);
 }
