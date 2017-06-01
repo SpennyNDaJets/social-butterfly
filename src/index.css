@@ -59,6 +59,25 @@ li {
   flex-direction: column;
 }
 
+.place-list__header {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.place-list__item {
+  margin: 50px;
+}
+
+.place-list__info {
+  display: flex;
+  color: #ff8800;
+}
+
+.thumbImg {
+  height: 100px;
+  margin: 10px;
+}
+
 .button {
   color: #e6e6e6;
   background: #00ccff;
@@ -80,4 +99,8 @@ li {
 
 .button:active {
   transform: translateY(1px);
+}
+
+.App-body {
+  display: flex;
 }
