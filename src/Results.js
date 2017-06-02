@@ -1,8 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'; 
 import Categories from './data/categories';
 import axios from 'axios';
 import Map from './Map';
+
 let key = '18127e6f127c14484e37b5f5b266679';
+
+let getDate = millis => {
+  let eventTime = new Date(parseInt(millis));
+  return eventTime.toString();
+};
 
 class Results extends Component {
   constructor(props) {
@@ -62,7 +68,7 @@ class Results extends Component {
     return (
       <div className="App">
         <div className="App-body">
-          <div className="-list__container">
+          <div className="list__container">
             <div className="place-list__header">
               Events
             </div>
@@ -82,7 +88,7 @@ class Results extends Component {
                             {event.next_event.name}
                           </div>
                           <div className="place-list__item-time">
-                            {Date(event.next_event.time)}
+                            {getDate(event.next_event.time)}
                           </div>
                           <div className="place-list__category">
                             Catagory: {event.category.name}
@@ -100,7 +106,9 @@ class Results extends Component {
             </ul>
           </div>
           {this.state.eventList.length != 0 &&
-            <Map events={this.state.eventList} lat={this.state.eventList[0].lat} lon={this.state.eventList[0].lon} />
+            <div style={{ flex: 1 }}>
+              <Map events={this.state.eventList} lat={this.state.eventList[0].lat} lon={this.state.eventList[0].lon} />
+            </div>
           }
         </div>
       </div>

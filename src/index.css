@@ -34,6 +34,10 @@ li {
   flex-direction: column;
 }
 
+.list__container {
+  width: 400px;
+}
+
 .inputField {
   margin: 10px;
 }
@@ -71,6 +75,10 @@ li {
 .place-list__info {
   display: flex;
   color: #ff8800;
+}
+
+.place-list__item-name {
+  font-weight: bold;
 }
 
 .thumbImg {
