@@ -2,34 +2,37 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Categories from './data/categories';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
 
 let createSearchUrl = (zip, radius, category) => {
-    let urlString = "";
-    // add zip, default is 0
-    if (zip != ""){
-      urlString += "/" + zip;
-    }
-    else  {
-      urlString += "/0"
-    }
+  let urlString = "";
+  // add zip, default is 0
+  if (zip != "") {
+    urlString += "/" + zip;
+  }
+  else {
+    urlString += "/0"
+  }
 
-    // add radius, default is 50
-    if (radius != ""){
-      urlString += "/" + radius;
-    }
-    else {
-      urlString += "/50";
-    }
+  // add radius, default is 50
+  if (radius != "") {
+    urlString += "/" + radius;
+  }
+  else {
+    urlString += "/50";
+  }
 
-    //add category, default is 0
-    if (category != ""){
-      urlString += "/" + category;
-    }
-    else {
-      urlString += "/0";
-    }
-    return urlString;
-  };
+  //add category, default is 0
+  if (category != "") {
+    urlString += "/" + category;
+  }
+  else {
+    urlString += "/0";
+  }
+  return urlString;
+};
+
 class InputForm extends Component {
   constructor(props) {
     super(props)
@@ -37,11 +40,12 @@ class InputForm extends Component {
     this.state = {
       zip: "",
       radius: "",
-      category: ""
+      category: "",
+      searchUrl: ""
     }
 
     this.updateInputChange = this.updateInputChange.bind(this);
-
+    this.convertCategory = this.convertCategory.bind(this);
   }
 
   updateInputChange(input, event) {
@@ -53,52 +57,69 @@ class InputForm extends Component {
     });
   }
 
+  convertCategory(categoryString, event) {
+    // update category name
+    this.updateInputChange("category", event);
+
+    // filter out categories with different name
+    let categoryList = Categories.filter(category => {
+      return ((category.name == categoryString) || (category.shortname == categoryString));
+    });
+
+    if (categoryList.length > 0) {
+      let categoryNumber = categoryList[0].id.toString();
+      this.setState({
+        ...this.state,
+        category: categoryNumber,
+      });
+    }
+  }
+
   render() {
 
     let searchUrl = createSearchUrl(this.state.zip, this.state.radius, this.state.category);
-
     return (
       <form className="searchForm">
         <div className="inputForm">
-        <div className='inputField'>
-          <h3 className="inputLabel">Location: </h3>
-          <input
-            id="location"
-            placeholder="Enter ZIP code"
-            type="text"
-            autoComplete="off"
-            value={this.state.zip}
-            onChange={e => this.updateInputChange("zip", e)}
-          />
+          <div className='inputField'>
+            <h3 className="inputLabel">Location: </h3>
+            <input
+              id="location"
+              placeholder="Enter ZIP code"
+              type="text"
+              autoComplete="off"
+              value={this.state.zip}
+              onChange={e => this.updateInputChange("zip", e)}
+            />
+          </div>
+          <div className='inputField'>
+            <h3 className="inputLabel">Distance: </h3>
+            <input
+              id="radius"
+              placeholder="Enter Radius in miles"
+              type="text"
+              autoComplete="off"
+              value={this.state.radius}
+              onChange={e => this.updateInputChange("radius", e)}
+            />
+          </div>
+          <div className='inputField'>
+            <h3 className="inputLabel">Activity: </h3>
+            <input
+              id="activity"
+              placeholder="Pick Activity"
+              type="text"
+              autoComplete="off"
+              value={this.state.category}
+              onChange={e => this.convertCategory(this.state.category, e)}
+            />
+          </div>
         </div>
-        <div className='inputField'>
-          <h3 className="inputLabel">Distance: </h3>
-          <input
-            id="radius"
-            placeholder="Enter Radius in miles"
-            type="text"
-            autoComplete="off"
-            value={this.state.radius}
-            onChange={e => this.updateInputChange("radius", e)}
-          />
-        </div>
-        <div className='inputField'>
-          <h3 className="inputLabel">Activity: </h3>
-          <input
-            id="activity"
-            placeholder="Pick Activity"
-            type="text"
-            autoComplete="off"
-            value={this.state.category}
-            onChange={e => this.updateInputChange("category", e)}
-          />
-        </div>
-        </div>
-      <Link
-        className='button'
-        to={'/results' + searchUrl}>
-        Search
-          </Link>
+        <Link
+          className='button'
+          to={'/results' + searchUrl}>
+          Search
+      </Link>
       </form >
 
     );

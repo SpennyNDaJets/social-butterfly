@@ -2,7 +2,18 @@ import React, { Component } from 'react';
 import Categories from './data/categories';
 import axios from 'axios';
 import Map from './Map';
+//import gcal from 'google-calendar';
+
+// access key for MeetUp
 let key = '18127e6f127c14484e37b5f5b266679';
+
+// create Google Calendar object for user
+//var google_calendar = new gcal.GoogleCalendar(localStorage.userData);
+
+let getDate = millis => {
+  let eventTime = new Date(parseInt(millis));
+  return eventTime.toString();
+};
 
 class Results extends Component {
   constructor(props) {
@@ -48,13 +59,12 @@ class Results extends Component {
       url += "&category=" + this.state.category;
     }
     const urlWithKey = url + "&key=" + key;
-    console.log(urlWithKey);
     // make axious request
     axios.get(urlWithKey).then(this._saveQuery);
   }
 
   addToCalendar(index) {
-    console.log(this.state.eventList[index].next_event.time);
+    console.log(localStorage.userData);
   }
 
   render() {
@@ -62,10 +72,12 @@ class Results extends Component {
     return (
       <div className="App">
         <div className="App-body">
-          <div className="-list__container">
-            <div className="place-list__header">
-              Events
-            </div>
+
+          <div className="list__container">
+            {this.state.eventList.length == 0 &&
+              <div className="place-list__header">There are no events </div>}
+            {this.state.eventList.length != 0 &&
+            <div className="place-list__header">Events</div>}
             <ul className="place-list">
               {this.state.eventList.map((event, index) => {
                 return (
@@ -82,7 +94,7 @@ class Results extends Component {
                             {event.next_event.name}
                           </div>
                           <div className="place-list__item-time">
-                            {Date(event.next_event.time)}
+                            {getDate(event.next_event.time)}
                           </div>
                           <div className="place-list__category">
                             Catagory: {event.category.name}
@@ -100,7 +112,9 @@ class Results extends Component {
             </ul>
           </div>
           {this.state.eventList.length != 0 &&
-            <Map events={this.state.eventList} lat={this.state.eventList[0].lat} lon={this.state.eventList[0].lon} />
+            <div style={{ flex: 1 }}>
+              <Map events={this.state.eventList} lat={this.state.eventList[0].lat} lon={this.state.eventList[0].lon} />
+            </div>
           }
         </div>
       </div>
