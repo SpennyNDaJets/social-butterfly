@@ -1,9 +1,14 @@
-import React, { Component } from 'react'; 
+import React, { Component } from 'react';
 import Categories from './data/categories';
 import axios from 'axios';
 import Map from './Map';
+//import gcal from 'google-calendar';
 
+// access key for MeetUp
 let key = '18127e6f127c14484e37b5f5b266679';
+
+// create Google Calendar object for user
+//var google_calendar = new gcal.GoogleCalendar(localStorage.userData);
 
 let getDate = millis => {
   let eventTime = new Date(parseInt(millis));
@@ -54,13 +59,12 @@ class Results extends Component {
       url += "&category=" + this.state.category;
     }
     const urlWithKey = url + "&key=" + key;
-    console.log(urlWithKey);
     // make axious request
     axios.get(urlWithKey).then(this._saveQuery);
   }
 
   addToCalendar(index) {
-    console.log(this.state.eventList[index].next_event.time);
+    console.log(localStorage.userData);
   }
 
   render() {
@@ -68,10 +72,12 @@ class Results extends Component {
     return (
       <div className="App">
         <div className="App-body">
+
           <div className="list__container">
-            <div className="place-list__header">
-              Events
-            </div>
+            {this.state.eventList.length == 0 &&
+              <div className="place-list__header">There are no events </div>}
+            {this.state.eventList.length != 0 &&
+            <div className="place-list__header">Events</div>}
             <ul className="place-list">
               {this.state.eventList.map((event, index) => {
                 return (
