@@ -75,7 +75,7 @@ class Results extends Component {
 
           <div className="list__container">
             {this.state.eventList.length == 0 &&
-              <div className="place-list__header">There are no events </div>}
+              <div className="place-list__header">There are no events</div>}
             {this.state.eventList.length != 0 &&
             <div className="place-list__header">Events</div>}
             <ul className="place-list">

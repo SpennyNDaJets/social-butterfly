@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import {
-    BrowserRouter as Router,
-    Route,
-    Link } from 'react-router-dom';
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
 import Home from './Home';
 import Results from './Results';
 import Nav from './Nav';
@@ -17,10 +18,10 @@ class App extends Component {
       <div className="App">
         <Router>
           <div>
-            <Nav/>
-            <Route exact path='/' component={Login}/>
-            <Route path='/home' component={Home}/>
-            <Route path='/results/:zip/:radius/:category' component={Results}/>
+            <Nav />
+            <Route exact path='/' component={Login} />
+            <Route path='/home' component={Home} />
+            <Route path='/results/:zip/:radius/:category' component={Results} />
           </div>
 
         </Router>
