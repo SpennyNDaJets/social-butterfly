@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import Categories from './data/categories';
+import Categories from '../Assets/data/categories';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
@@ -14,22 +13,9 @@ let createSearchUrl = (zip, radius, category) => {
   else {
     urlString += "/0"
   }
+  
+  urlString += "/" + radius + "/" + category;
 
-  // add radius, default is 50
-  if (radius != "") {
-    urlString += "/" + radius;
-  }
-  else {
-    urlString += "/50";
-  }
-
-  //add category, default is 0
-  if (category != "") {
-    urlString += "/" + category;
-  }
-  else {
-    urlString += "/0";
-  }
   return urlString;
 };
 
@@ -39,40 +25,19 @@ class InputForm extends Component {
 
     this.state = {
       zip: "",
-      radius: "",
-      category: "",
+      radius: "5",
+      category: "0",
       searchUrl: ""
     }
-
-    this.updateInputChange = this.updateInputChange.bind(this);
-    this.convertCategory = this.convertCategory.bind(this);
   }
 
-  updateInputChange(input, event) {
+  updateInputChange = (input, event) => {
     let value = event.target.value;
 
     this.setState({
       ...this.state,
       [input]: value
     });
-  }
-
-  convertCategory(categoryString, event) {
-    // update category name
-    this.updateInputChange("category", event);
-
-    // filter out categories with different name
-    let categoryList = Categories.filter(category => {
-      return ((category.name == categoryString) || (category.shortname == categoryString));
-    });
-
-    if (categoryList.length > 0) {
-      let categoryNumber = categoryList[0].id.toString();
-      this.setState({
-        ...this.state,
-        category: categoryNumber,
-      });
-    }
   }
 
   render() {
@@ -94,25 +59,33 @@ class InputForm extends Component {
           </div>
           <div className='inputField'>
             <h3 className="inputLabel">Distance: </h3>
-            <input
-              id="radius"
-              placeholder="Enter Radius in miles"
-              type="text"
-              autoComplete="off"
+            <select
+              name="radius"
               value={this.state.radius}
               onChange={e => this.updateInputChange("radius", e)}
-            />
+            >
+              <option value="5">5 miles</option>
+              <option value="10">10 miles</option>
+              <option value="25">25 miles</option>
+              <option value="50">50 miles</option>
+              <option value="100">100 miles</option>
+              <option value="250">250 miles</option>
+            </select>
           </div>
           <div className='inputField'>
             <h3 className="inputLabel">Activity: </h3>
-            <input
-              id="activity"
-              placeholder="Pick Activity"
-              type="text"
-              autoComplete="off"
+            <select
+              name="activities"
               value={this.state.category}
-              onChange={e => this.convertCategory(this.state.category, e)}
-            />
+              onChange={e => this.updateInputChange('category', e)}
+            >
+              <option value="0">All Categories</option>
+              {Categories.map( category => {
+                return (
+                  <option value={category.id}>{category.shortname}</option>
+                );
+              })}
+            </select>
           </div>
         </div>
         <Link

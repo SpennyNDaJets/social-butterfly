@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Categories from './data/categories';
+import Categories from '../Assets/data/categories';
 import axios from 'axios';
-import Map from './Map';
+import { Map } from './';
 //import gcal from 'google-calendar';
 
 // access key for MeetUp
@@ -25,9 +25,6 @@ class Results extends Component {
       category: this.props.match.params.category,
       eventList: []
     }
-
-    this._saveQuery = this._saveQuery.bind(this);
-    this.addToCalendar = this.addToCalendar.bind(this);
   }
 
   _saveQuery = response => {
@@ -58,12 +55,13 @@ class Results extends Component {
     if (this.state.category != "0") {
       url += "&category=" + this.state.category;
     }
+    
     const urlWithKey = url + "&key=" + key;
     // make axious request
     axios.get(urlWithKey).then(this._saveQuery);
   }
 
-  addToCalendar(index) {
+  addToCalendar = (index) => {
     console.log(localStorage.userData);
   }
 

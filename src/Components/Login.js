@@ -13,6 +13,7 @@ class Login extends Component {
 
   responseGoogle = (response) => {
     localStorage.setItem('userData', response.accessToken);
+    localStorage.setItem('userEmail', response.profileObj.email);
     if (response.accessToken) {
       this.setState({
         login: true
